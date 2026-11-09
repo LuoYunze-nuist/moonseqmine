@@ -1,6 +1,7 @@
 ///|
 /// Descriptive support comparison of two cohorts; difference is foreground
 /// rate minus background rate. A zero background rate has no finite ratio.
+#derive(Eq, Debug)
 pub(all) struct CohortComparison {
   pattern : Pattern
   foreground_support : Int32
@@ -11,7 +12,7 @@ pub(all) struct CohortComparison {
   background_rate : Double
   difference : Double
   ratio : Double?
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend CohortComparison with Eq::{equal, not_equal}

@@ -1,10 +1,11 @@
 ///|
 /// Work counters describe projection operations, not validation or wall time.
+#derive(Eq, Debug)
 pub(all) struct MiningStats {
   steps : Int32
   generated_states : Int32
   emitted_patterns : Int32
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend MiningStats with Eq::{equal, not_equal}
@@ -13,10 +14,11 @@ pub extend MiningStats with Eq::{equal, not_equal}
 pub extend MiningStats with @debug.Debug::{to_repr}
 
 ///|
+#derive(Eq, Debug)
 pub(all) struct MiningResult {
   patterns : Array[FrequentPattern]
   stats : MiningStats
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend MiningResult with Eq::{equal, not_equal}

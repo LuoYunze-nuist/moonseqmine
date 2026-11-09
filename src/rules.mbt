@@ -2,6 +2,7 @@
 /// A descriptive, unconstrained sequential association at an itemset boundary.
 /// Prefix and suffix occurrences may have additional embeddings in a sequence;
 /// these statistics describe co-occurrence/order, never a causal implication.
+#derive(Eq, Debug)
 pub(all) struct SequentialRule {
   prefix : Pattern
   suffix : Pattern
@@ -11,7 +12,7 @@ pub(all) struct SequentialRule {
   database_size : Int32
   confidence : Double
   lift : Double
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend SequentialRule with Eq::{equal, not_equal}

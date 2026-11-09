@@ -1,9 +1,10 @@
 ///|
 /// A copied subset and a stable map from its local IDs to original IDs.
+#derive(Eq, Debug)
 pub(all) struct DatabaseSelection {
   database : Database
   source_ids : Array[Int32]
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend DatabaseSelection with Eq::{equal, not_equal}
@@ -70,11 +71,12 @@ pub fn relative_min_support(
 }
 
 ///|
+#derive(Eq, Debug)
 pub(all) struct ItemFrequency {
   item : Int32
   sequence_support : Int32
   event_occurrences : Int32
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend ItemFrequency with Eq::{equal, not_equal}
@@ -84,6 +86,7 @@ pub extend ItemFrequency with @debug.Debug::{to_repr}
 
 ///|
 /// Totals use Int64 because callers may concatenate many large records.
+#derive(Eq, Debug)
 pub(all) struct DatabaseSummary {
   sequences : Int32
   empty_sequences : Int32
@@ -91,7 +94,7 @@ pub(all) struct DatabaseSummary {
   items : Int64
   max_sequence_length : Int32
   alphabet : Array[ItemFrequency]
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend DatabaseSummary with Eq::{equal, not_equal}

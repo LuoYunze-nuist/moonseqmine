@@ -6,7 +6,7 @@ MoonSeqMine 是用 MoonBit 实现的频繁序列挖掘基础库。输入是**多
 
 ## 安装与快速开始
 
-需要 MoonBit `moonc >= 0.10.16`。本地交付验证使用 `moonc 0.10.18+6c83a7f62`、`moon 0.1.20261028`。库为纯 MoonBit，面向 wasm-gc、wasm、js、native；native 需要 C 编译器，JS 运行需要 Node.js。
+需要 MoonBit `moonc >= 0.10.20`。本地交付验证使用 `moonc 0.10.20+65efd5b93`、`moon 0.1.20261104`。库为纯 MoonBit，面向 wasm-gc、wasm、js、native；native 需要 C 编译器，JS 运行需要 Node.js。
 
 在现有模块根目录安装精确版本：
 

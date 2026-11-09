@@ -81,16 +81,18 @@ pub fn verify_witness(Database, Pattern, Witness, constraints? : Constraints) ->
 pub fn witnesses(Database, Pattern, constraints? : Constraints, max_witnesses? : Int32, max_steps? : Int32) -> Array[Witness] raise MiningError
 
 // Errors
+#derive(Eq, @debug.Debug)
 pub(all) suberror MiningError {
   Invalid(String)
   Resource(String)
   Parse(String)
-} derive(Eq, @debug.Debug)
+}
 pub fn MiningError::equal(Self, Self) -> Bool
 pub fn MiningError::not_equal(Self, Self) -> Bool
 pub fn MiningError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
+#derive(Eq, @debug.Debug)
 pub(all) struct CohortComparison {
   pattern : Pattern
   foreground_support : Int32
@@ -101,34 +103,38 @@ pub(all) struct CohortComparison {
   background_rate : Double
   difference : Double
   ratio : Double?
-} derive(Eq, @debug.Debug)
+}
 pub fn CohortComparison::equal(Self, Self) -> Bool
 pub fn CohortComparison::not_equal(Self, Self) -> Bool
 pub fn CohortComparison::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Constraints {
   max_gap : Int32?
   max_span : Int32?
-} derive(Eq, @debug.Debug)
+}
 pub fn Constraints::equal(Self, Self) -> Bool
 pub fn Constraints::not_equal(Self, Self) -> Bool
 pub fn Constraints::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Database {
   sequences : Array[Array[Array[Int32]]]
-} derive(Eq, @debug.Debug)
+}
 pub fn Database::equal(Self, Self) -> Bool
 pub fn Database::not_equal(Self, Self) -> Bool
 pub fn Database::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct DatabaseSelection {
   database : Database
   source_ids : Array[Int32]
-} derive(Eq, @debug.Debug)
+}
 pub fn DatabaseSelection::equal(Self, Self) -> Bool
 pub fn DatabaseSelection::not_equal(Self, Self) -> Bool
 pub fn DatabaseSelection::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct DatabaseSummary {
   sequences : Int32
   empty_sequences : Int32
@@ -136,24 +142,26 @@ pub(all) struct DatabaseSummary {
   items : Int64
   max_sequence_length : Int32
   alphabet : Array[ItemFrequency]
-} derive(Eq, @debug.Debug)
+}
 pub fn DatabaseSummary::equal(Self, Self) -> Bool
 pub fn DatabaseSummary::not_equal(Self, Self) -> Bool
 pub fn DatabaseSummary::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct FrequentPattern {
   pattern : Pattern
   support : Int32
-} derive(Eq, @debug.Debug)
+}
 pub fn FrequentPattern::equal(Self, Self) -> Bool
 pub fn FrequentPattern::not_equal(Self, Self) -> Bool
 pub fn FrequentPattern::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct ItemFrequency {
   item : Int32
   sequence_support : Int32
   event_occurrences : Int32
-} derive(Eq, @debug.Debug)
+}
 pub fn ItemFrequency::equal(Self, Self) -> Bool
 pub fn ItemFrequency::not_equal(Self, Self) -> Bool
 pub fn ItemFrequency::to_repr(Self) -> @debug.Repr
@@ -162,41 +170,46 @@ pub struct LabelDictionary {
   // private fields
 }
 
+#derive(Eq, @debug.Debug)
 pub(all) struct MiningResult {
   patterns : Array[FrequentPattern]
   stats : MiningStats
-} derive(Eq, @debug.Debug)
+}
 pub fn MiningResult::equal(Self, Self) -> Bool
 pub fn MiningResult::not_equal(Self, Self) -> Bool
 pub fn MiningResult::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct MiningStats {
   steps : Int32
   generated_states : Int32
   emitted_patterns : Int32
-} derive(Eq, @debug.Debug)
+}
 pub fn MiningStats::equal(Self, Self) -> Bool
 pub fn MiningStats::not_equal(Self, Self) -> Bool
 pub fn MiningStats::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Options {
   min_support : Int32
   max_items : Int32
   max_patterns : Int32
   max_states : Int32
   max_steps : Int32
-} derive(Eq, @debug.Debug)
+}
 pub fn Options::equal(Self, Self) -> Bool
 pub fn Options::not_equal(Self, Self) -> Bool
 pub fn Options::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Pattern {
   itemsets : Array[Array[Int32]]
-} derive(Eq, @debug.Debug)
+}
 pub fn Pattern::equal(Self, Self) -> Bool
 pub fn Pattern::not_equal(Self, Self) -> Bool
 pub fn Pattern::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct SequentialRule {
   prefix : Pattern
   suffix : Pattern
@@ -206,7 +219,7 @@ pub(all) struct SequentialRule {
   database_size : Int32
   confidence : Double
   lift : Double
-} derive(Eq, @debug.Debug)
+}
 pub fn SequentialRule::equal(Self, Self) -> Bool
 pub fn SequentialRule::not_equal(Self, Self) -> Bool
 pub fn SequentialRule::to_repr(Self) -> @debug.Repr
@@ -218,10 +231,11 @@ pub fn SupportIndex::query_ids(Self, Pattern, constraints? : Constraints, max_st
 pub fn SupportIndex::query_support(Self, Pattern, constraints? : Constraints, max_steps? : Int32) -> Int32 raise MiningError
 pub fn SupportIndex::sequence_count(Self) -> Int32
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Witness {
   sequence_id : Int32
   positions : Array[Int32]
-} derive(Eq, @debug.Debug)
+}
 pub fn Witness::equal(Self, Self) -> Bool
 pub fn Witness::not_equal(Self, Self) -> Bool
 pub fn Witness::to_repr(Self) -> @debug.Repr
