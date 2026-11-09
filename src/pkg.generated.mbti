@@ -1,0 +1,232 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "LuoYunze-nuist/moonseqmine"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn closed_patterns(Array[FrequentPattern]) -> Array[FrequentPattern] raise MiningError
+
+pub fn compare_cohorts(Database, Database, Array[Pattern], constraints? : Constraints, max_steps? : Int32) -> Array[CohortComparison] raise MiningError
+
+pub fn constraints(max_gap? : Int32, max_span? : Int32) -> Constraints
+
+pub fn database(Array[Array[Array[Int32]]]) -> Database raise MiningError
+
+pub fn decode_labeled_sequences(Database, LabelDictionary) -> Array[Array[Array[String]]] raise MiningError
+
+pub fn encode_labeled_sequences(Array[Array[Array[String]]]) -> (Database, LabelDictionary) raise MiningError
+
+pub fn format_database_json(Database) -> String raise MiningError
+
+pub fn format_pattern_json(Pattern) -> String raise MiningError
+
+pub fn format_spmf(Database) -> String raise MiningError
+
+pub fn intern_label(LabelDictionary, String) -> Int32 raise MiningError
+
+pub fn is_subpattern(Pattern, Pattern) -> Bool raise MiningError
+
+pub fn item_count(Pattern) -> Int32
+
+pub fn label_dictionary() -> LabelDictionary
+
+pub fn label_of(LabelDictionary, Int32) -> String?
+
+pub fn maximal_patterns(Array[FrequentPattern]) -> Array[FrequentPattern] raise MiningError
+
+pub fn mine(Database, Options, constraints? : Constraints) -> Array[FrequentPattern] raise MiningError
+
+pub fn mine_with_stats(Database, Options, constraints? : Constraints) -> MiningResult raise MiningError
+
+pub fn options(Int32, max_items? : Int32, max_patterns? : Int32, max_states? : Int32, max_steps? : Int32) -> Options
+
+pub fn parse_database_json(String) -> Database raise MiningError
+
+pub fn parse_pattern_json(String) -> Pattern raise MiningError
+
+pub fn parse_spmf(String) -> Database raise MiningError
+
+pub fn partition_database(Database, Array[Int32]) -> (DatabaseSelection, DatabaseSelection) raise MiningError
+
+pub fn pattern(Array[Array[Int32]]) -> Pattern raise MiningError
+
+pub fn pattern_key(Pattern) -> String
+
+pub fn relative_min_support(Int32, Int32, Int32) -> Int32 raise MiningError
+
+pub fn select_sequences(Database, Array[Int32]) -> DatabaseSelection raise MiningError
+
+pub fn sequential_rules(Database, Array[FrequentPattern], min_confidence? : Double) -> Array[SequentialRule] raise MiningError
+
+pub fn summarize_database(Database) -> DatabaseSummary raise MiningError
+
+pub fn support(Database, Pattern, constraints? : Constraints, max_steps? : Int32) -> Int32 raise MiningError
+
+pub fn support_index(Database) -> SupportIndex raise MiningError
+
+pub fn supporting_ids(Database, Pattern, constraints? : Constraints, max_steps? : Int32) -> Array[Int32] raise MiningError
+
+pub fn validate_constraints(Constraints) -> Unit raise MiningError
+
+pub fn validate_database(Database) -> Unit raise MiningError
+
+pub fn validate_options(Options) -> Unit raise MiningError
+
+pub fn validate_pattern(Pattern) -> Unit raise MiningError
+
+pub fn verify_witness(Database, Pattern, Witness, constraints? : Constraints) -> Bool raise MiningError
+
+pub fn witnesses(Database, Pattern, constraints? : Constraints, max_witnesses? : Int32, max_steps? : Int32) -> Array[Witness] raise MiningError
+
+// Errors
+pub(all) suberror MiningError {
+  Invalid(String)
+  Resource(String)
+  Parse(String)
+} derive(Eq, @debug.Debug)
+pub fn MiningError::equal(Self, Self) -> Bool
+pub fn MiningError::not_equal(Self, Self) -> Bool
+pub fn MiningError::to_repr(Self) -> @debug.Repr
+
+// Types and methods
+pub(all) struct CohortComparison {
+  pattern : Pattern
+  foreground_support : Int32
+  background_support : Int32
+  foreground_size : Int32
+  background_size : Int32
+  foreground_rate : Double
+  background_rate : Double
+  difference : Double
+  ratio : Double?
+} derive(Eq, @debug.Debug)
+pub fn CohortComparison::equal(Self, Self) -> Bool
+pub fn CohortComparison::not_equal(Self, Self) -> Bool
+pub fn CohortComparison::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Constraints {
+  max_gap : Int32?
+  max_span : Int32?
+} derive(Eq, @debug.Debug)
+pub fn Constraints::equal(Self, Self) -> Bool
+pub fn Constraints::not_equal(Self, Self) -> Bool
+pub fn Constraints::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Database {
+  sequences : Array[Array[Array[Int32]]]
+} derive(Eq, @debug.Debug)
+pub fn Database::equal(Self, Self) -> Bool
+pub fn Database::not_equal(Self, Self) -> Bool
+pub fn Database::to_repr(Self) -> @debug.Repr
+
+pub(all) struct DatabaseSelection {
+  database : Database
+  source_ids : Array[Int32]
+} derive(Eq, @debug.Debug)
+pub fn DatabaseSelection::equal(Self, Self) -> Bool
+pub fn DatabaseSelection::not_equal(Self, Self) -> Bool
+pub fn DatabaseSelection::to_repr(Self) -> @debug.Repr
+
+pub(all) struct DatabaseSummary {
+  sequences : Int32
+  empty_sequences : Int32
+  events : Int64
+  items : Int64
+  max_sequence_length : Int32
+  alphabet : Array[ItemFrequency]
+} derive(Eq, @debug.Debug)
+pub fn DatabaseSummary::equal(Self, Self) -> Bool
+pub fn DatabaseSummary::not_equal(Self, Self) -> Bool
+pub fn DatabaseSummary::to_repr(Self) -> @debug.Repr
+
+pub(all) struct FrequentPattern {
+  pattern : Pattern
+  support : Int32
+} derive(Eq, @debug.Debug)
+pub fn FrequentPattern::equal(Self, Self) -> Bool
+pub fn FrequentPattern::not_equal(Self, Self) -> Bool
+pub fn FrequentPattern::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ItemFrequency {
+  item : Int32
+  sequence_support : Int32
+  event_occurrences : Int32
+} derive(Eq, @debug.Debug)
+pub fn ItemFrequency::equal(Self, Self) -> Bool
+pub fn ItemFrequency::not_equal(Self, Self) -> Bool
+pub fn ItemFrequency::to_repr(Self) -> @debug.Repr
+
+pub struct LabelDictionary {
+  // private fields
+}
+
+pub(all) struct MiningResult {
+  patterns : Array[FrequentPattern]
+  stats : MiningStats
+} derive(Eq, @debug.Debug)
+pub fn MiningResult::equal(Self, Self) -> Bool
+pub fn MiningResult::not_equal(Self, Self) -> Bool
+pub fn MiningResult::to_repr(Self) -> @debug.Repr
+
+pub(all) struct MiningStats {
+  steps : Int32
+  generated_states : Int32
+  emitted_patterns : Int32
+} derive(Eq, @debug.Debug)
+pub fn MiningStats::equal(Self, Self) -> Bool
+pub fn MiningStats::not_equal(Self, Self) -> Bool
+pub fn MiningStats::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Options {
+  min_support : Int32
+  max_items : Int32
+  max_patterns : Int32
+  max_states : Int32
+  max_steps : Int32
+} derive(Eq, @debug.Debug)
+pub fn Options::equal(Self, Self) -> Bool
+pub fn Options::not_equal(Self, Self) -> Bool
+pub fn Options::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Pattern {
+  itemsets : Array[Array[Int32]]
+} derive(Eq, @debug.Debug)
+pub fn Pattern::equal(Self, Self) -> Bool
+pub fn Pattern::not_equal(Self, Self) -> Bool
+pub fn Pattern::to_repr(Self) -> @debug.Repr
+
+pub(all) struct SequentialRule {
+  prefix : Pattern
+  suffix : Pattern
+  support : Int32
+  prefix_support : Int32
+  suffix_support : Int32
+  database_size : Int32
+  confidence : Double
+  lift : Double
+} derive(Eq, @debug.Debug)
+pub fn SequentialRule::equal(Self, Self) -> Bool
+pub fn SequentialRule::not_equal(Self, Self) -> Bool
+pub fn SequentialRule::to_repr(Self) -> @debug.Repr
+
+pub struct SupportIndex {
+  snapshot : Database
+  postings : Map[Int32, Array[Int32]]
+}
+pub fn SupportIndex::query_ids(Self, Pattern, constraints? : Constraints, max_steps? : Int32) -> Array[Int32] raise MiningError
+pub fn SupportIndex::query_support(Self, Pattern, constraints? : Constraints, max_steps? : Int32) -> Int32 raise MiningError
+pub fn SupportIndex::sequence_count(Self) -> Int32
+
+pub(all) struct Witness {
+  sequence_id : Int32
+  positions : Array[Int32]
+} derive(Eq, @debug.Debug)
+pub fn Witness::equal(Self, Self) -> Bool
+pub fn Witness::not_equal(Self, Self) -> Bool
+pub fn Witness::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

@@ -7,6 +7,7 @@ The generated test is not production code and is excluded from implementation LO
 import argparse
 import json
 import random
+import re
 from pathlib import Path
 from prefixspan import PrefixSpan
 
@@ -42,7 +43,11 @@ def main():
     # moon fmt changes layout, so compare lexical content ignoring whitespace.
     # All generated strings are decimal IDs separated by semicolons: no spaces.
     if args.check:
-        if ''.join(path.read_text(encoding='utf-8').split()) != ''.join(generated.split()):
+        def normalize(text):
+            text = re.sub(r'//[^\n]*', '', text)
+            text = ''.join(text.split()).replace('Int32','Int')
+            return re.sub(r',(?=[\]\)])', '', text)
+        if normalize(path.read_text(encoding='utf-8')) != normalize(generated):
             raise SystemExit('Reference fixture mismatch; regenerate and inspect diff')
         print('128 deterministic PrefixSpan reference fixtures verified')
     else:
@@ -51,3 +56,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

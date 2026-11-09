@@ -1,0 +1,52 @@
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  portable:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [wasm-gc, wasm, js, native]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install official MoonBit toolchain
+        run: |
+          curl --fail --silent --show-error --location https://cli.moonbitlang.com/install/unix.sh -o /tmp/install-moonbit.sh
+          bash /tmp/install-moonbit.sh
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Verify compiler baseline
+        run: |
+          moon version --all
+          python3 scripts/check_toolchain.py
+      - name: Check formatting and public interfaces
+        run: |
+          moon fmt --check
+          moon info
+          git diff --exit-code -- src/pkg.generated.mbti
+      - name: Check build and test
+        run: |
+          moon check --target ${{ matrix.target }} --deny-warn
+          moon build --target ${{ matrix.target }} --deny-warn
+          moon test --target ${{ matrix.target }} --deny-warn
+      - name: Run downstream workflows
+        run: |
+          moon run src/examples/journeys --target ${{ matrix.target }} --deny-warn
+          moon run src/examples/services --target ${{ matrix.target }} --deny-warn
+          moon run src/examples/symbols --target ${{ matrix.target }} --deny-warn
+  reference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r scripts/reference-requirements.txt
+      - run: python scripts/reference_vectors.py --check
+      - run: python scripts/audit_source.py
