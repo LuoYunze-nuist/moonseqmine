@@ -1,8 +1,8 @@
 ///|
 /// Immutable-by-API snapshot with item-to-sequence postings for repeated queries.
 pub struct SupportIndex {
-  snapshot : Database
-  postings : Map[Int32, Array[Int32]]
+  priv snapshot : Database
+  priv postings : Map[Int32, Array[Int32]]
 }
 
 ///|

@@ -212,8 +212,7 @@ pub fn SequentialRule::not_equal(Self, Self) -> Bool
 pub fn SequentialRule::to_repr(Self) -> @debug.Repr
 
 pub struct SupportIndex {
-  snapshot : Database
-  postings : Map[Int32, Array[Int32]]
+  // private fields
 }
 pub fn SupportIndex::query_ids(Self, Pattern, constraints? : Constraints, max_steps? : Int32) -> Array[Int32] raise MiningError
 pub fn SupportIndex::query_support(Self, Pattern, constraints? : Constraints, max_steps? : Int32) -> Int32 raise MiningError
