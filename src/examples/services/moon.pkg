@@ -1,0 +1,5 @@
+import {
+  "LuoYunze-nuist/moonseqmine" @seq,
+}
+
+pkgtype(kind: "executable")
