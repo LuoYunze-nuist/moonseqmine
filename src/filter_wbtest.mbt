@@ -93,3 +93,27 @@ test "filter copies outer and inner arrays for both public operations" {
   input.pattern.itemsets[0][0] = 7
   assert_eq(maximal[0].pattern.itemsets, [[1], [2, 3]])
 }
+
+///|
+test "filter permits gap-constrained support inversions in bounded families" {
+  let db = database([[[1], [2], [3]], [[1], [2], [3]], [[1], [3]]])
+  let small = pattern([[1], [3]])
+  let large = pattern([[1], [2], [3]])
+  let limits = constraints(max_gap=0)
+  let a : FrequentPattern = {
+    pattern: small,
+    support: support(db, small, constraints=limits),
+  }
+  let b : FrequentPattern = {
+    pattern: large,
+    support: support(db, large, constraints=limits),
+  }
+  assert_true(is_subpattern(small, large))
+  assert_eq(a.support, 1)
+  assert_eq(b.support, 2)
+  let closed = closed_patterns([b, a])
+  assert_eq(closed.length(), 2)
+  assert_true(closed.contains(a))
+  assert_true(closed.contains(b))
+  assert_eq(maximal_patterns([a, b]), [b])
+}

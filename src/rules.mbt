@@ -56,9 +56,10 @@ pub fn sequential_rules(
   if database_size == 0 {
     return []
   }
+  let index = support_index(db)
   let result : Array[SequentialRule] = []
   for record in family {
-    let full_support = support(db, record.pattern)
+    let full_support = index.query_support(record.pattern)
     if full_support != record.support {
       raise Invalid(
         "supplied support differs from unconstrained database support",
@@ -71,8 +72,8 @@ pub fn sequential_rules(
         split,
         record.pattern.itemsets.length(),
       )
-      let prefix_support = support(db, prefix)
-      let suffix_support = support(db, suffix)
+      let prefix_support = index.query_support(prefix)
+      let suffix_support = index.query_support(suffix)
       let confidence = full_support.to_double() / prefix_support.to_double()
       if confidence >= min_confidence {
         result.push({

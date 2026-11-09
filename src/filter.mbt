@@ -68,6 +68,8 @@ fn postprocess_select(
 /// Remove a pattern if a strict superpattern in that family has equal support.
 /// Identical records are deduplicated; results are sorted by pattern_key and
 /// contain independent copies of every itemset. No database is consulted.
+/// Supplied supports need not be antimonotone: max_gap constraints can break
+/// that property for arbitrary subpatterns. This is not constrained closure.
 pub fn closed_patterns(
   patterns : Array[FrequentPattern],
 ) -> Array[FrequentPattern] raise MiningError {

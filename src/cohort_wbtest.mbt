@@ -1,7 +1,7 @@
 ///|
 test "cohort comparison counts sequences and includes empty samples" {
   let fg = database([[[1], [2]], [[1, 2]], [], [[1], [2]]])
-  let bg = database([[[1], [2]], [], [], []])
+  let bg = database([[[1], [2]], [], [], [], [], [], [], []])
   let p = pattern([[1], [2]])
   let q = pattern([[1]])
   let result = compare_cohorts(fg, bg, [p, q])
@@ -10,11 +10,11 @@ test "cohort comparison counts sequences and includes empty samples" {
   assert_eq(row.foreground_support, 2)
   assert_eq(row.background_support, 1)
   assert_eq(row.foreground_size, 4)
-  assert_eq(row.background_size, 4)
+  assert_eq(row.background_size, 8)
   assert_eq(row.foreground_rate, 0.5)
-  assert_eq(row.background_rate, 0.25)
-  assert_eq(row.difference, 0.25)
-  assert_eq(row.ratio, Some(2.0))
+  assert_eq(row.background_rate, 0.125)
+  assert_eq(row.difference, 0.375)
+  assert_eq(row.ratio, Some(4.0))
   assert_eq(result[1].pattern, q)
   assert_eq(result[1].foreground_support, 3)
 }

@@ -137,3 +137,15 @@ test "rules are ordered deterministically and use unconstrained support" {
   }
   assert_true(failed)
 }
+
+///|
+test "rules accept confidence endpoints and include empty samples in lift" {
+  let db = database([[[1], [2]], [], []])
+  let record : FrequentPattern = { pattern: pattern([[1], [2]]), support: 1, }
+  let all = sequential_rules(db, [record], min_confidence=0.0)
+  assert_eq(all.length(), 1)
+  assert_eq(all[0].confidence, 1.0)
+  assert_eq(all[0].lift, 3.0)
+  assert_eq(all[0].database_size, 3)
+  assert_eq(sequential_rules(db, [record], min_confidence=1.0), all)
+}
