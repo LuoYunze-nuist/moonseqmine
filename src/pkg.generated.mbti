@@ -28,7 +28,7 @@ pub fn intern_label(LabelDictionary, String) -> Int32 raise MiningError
 
 pub fn is_subpattern(Pattern, Pattern) -> Bool raise MiningError
 
-pub fn item_count(Pattern) -> Int32
+pub fn item_count(Pattern) -> Int64
 
 pub fn label_dictionary() -> LabelDictionary
 

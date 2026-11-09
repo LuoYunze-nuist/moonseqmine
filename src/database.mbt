@@ -78,7 +78,7 @@ pub fn database(
 
 ///|
 pub fn item_count(p : Pattern) -> Int64 {
-  let mut total = 0
+  let mut total : Int64 = 0L
   for event in p.itemsets {
     total += event.length().to_int64()
   }
