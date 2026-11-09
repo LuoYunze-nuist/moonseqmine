@@ -77,10 +77,10 @@ pub fn database(
 }
 
 ///|
-pub fn item_count(p : Pattern) -> Int32 {
+pub fn item_count(p : Pattern) -> Int64 {
   let mut total = 0
   for event in p.itemsets {
-    total += event.length()
+    total += event.length().to_int64()
   }
   total
 }

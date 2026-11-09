@@ -26,7 +26,7 @@ fn oracle_product(
 ) -> Unit {
   if at == events.length() {
     let p = Pattern::{ itemsets: built, }
-    if item_count(p) <= max_items {
+    if item_count(p) <= max_items.to_int64() {
       keys.add(pattern_key(p))
     }
     return
