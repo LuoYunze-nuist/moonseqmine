@@ -1,0 +1,5 @@
+prefixspan==0.5.2
+docopt==0.6.2
+extratools==0.8.2.1
+sortedcontainers==2.4.0
+toolz==1.0.0
