@@ -87,3 +87,62 @@ test "top_k agrees with an independent powerset oracle" {
     }
   }
 }
+
+///|
+test "top_k handles empty inputs and the declared item budget" {
+  assert_eq(top_k(database([]), 3), [])
+  assert_eq(top_k(database([[], []]), 3), [])
+  let db = database([[[1], [2]], [[1, 2]], [[2], [1]]])
+  assert_eq(top_k(db, 20, max_items=1), [
+    { pattern: pattern([[1]]), support: 3, },
+    { pattern: pattern([[2]]), support: 3, },
+  ])
+}
+
+///|
+test "top_k counts a sequence once despite repeated embeddings" {
+  let db = database([[[1], [1], [1], [2]], [[1], [2]]])
+  let found = top_k(db, 4, max_items=2)
+  assert_eq(
+    found.map(fn(record) { (pattern_key(record.pattern), record.support) }),
+    [("1", 2), ("2", 2), ("1;2", 2), ("1;1", 1)],
+  )
+}
+
+///|
+test "top_k uses string pattern keys for deterministic multi-digit ties" {
+  let db = database([[[2]], [[10]], [[2, 10]], [[10, 2]]])
+  let found = top_k(db, 4, max_items=1)
+  assert_eq(
+    found.map(fn(record) { (pattern_key(record.pattern), record.support) }),
+    [("2", 3), ("10", 3)],
+  )
+}
+
+///|
+test "top_k reports valid resource exhaustion without partial output" {
+  let db = database([[[1]]])
+  for limits in [(1, 10000000), (1000000, 1)] {
+    let failed = try {
+      ignore(top_k(db, 1, max_states=limits.0, max_steps=limits.1))
+      false
+    } catch {
+      Resource(_) => true
+      _ => false
+    }
+    assert_true(failed)
+  }
+}
+
+///|
+test "top_k validates manually constructed databases" {
+  let malformed : Database = { sequences: [[[2, 1]]], }
+  let failed = try {
+    ignore(top_k(malformed, 1))
+    false
+  } catch {
+    Invalid(_) => true
+    _ => false
+  }
+  assert_true(failed)
+}

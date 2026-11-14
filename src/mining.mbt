@@ -253,12 +253,14 @@ fn grow_top_k(
 }
 
 ///|
-/// Return exactly the best `k` unconstrained sequence patterns, ordered by
-/// descending sequence support and then by stable structural key. Ties at the
-/// cutoff are resolved by the key, so the result is deterministic. The
-/// search uses a dynamic kth-support threshold; unlike constrained mining,
-/// this pruning is sound because unconstrained sequence support is
-/// anti-monotone. `max_items`, `max_states`, and `max_steps` are hard limits.
+/// Return at most `k` of the best unconstrained sequence patterns within
+/// the `max_items`-bounded pattern family, ordered by descending sequence support
+/// and then by stable structural key. Ties at the cutoff are resolved by the
+/// key, so the result is deterministic. The search uses a dynamic kth-support
+/// threshold; unlike constrained mining, this pruning is sound because
+/// unconstrained sequence support is anti-monotone. Reaching `max_items` is a
+/// normal search boundary; `max_states` and `max_steps` are hard failure
+/// limits.
 pub fn top_k(
   db : Database,
   k : Int32,

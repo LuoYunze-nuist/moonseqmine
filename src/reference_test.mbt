@@ -66,6 +66,27 @@ test "Python PrefixSpan scalar differential 0/1" {
       ("3;3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3), ("2", 2), ("3", 2), ("1;3", 2)],
+  )
 }
 
 ///|
@@ -81,6 +102,27 @@ test "Python PrefixSpan scalar differential 0/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("1", 3), ("1;3", 2), ("2", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3), ("2", 2), ("3", 2), ("1;3", 2)],
+  )
 }
 
 ///|
@@ -146,6 +188,27 @@ test "Python PrefixSpan scalar differential 1/1" {
       ("3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 3), ("1;3", 3), ("2", 2), ("1;1", 2)],
+  )
 }
 
 ///|
@@ -176,6 +239,27 @@ test "Python PrefixSpan scalar differential 1/2" {
       ("2;3", 2),
       ("3", 3),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 3), ("1;3", 3), ("2", 2), ("1;1", 2)],
   )
 }
 
@@ -230,6 +314,27 @@ test "Python PrefixSpan scalar differential 2/1" {
       ("3;2;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2), ("3", 2), ("0", 1), ("1;0", 1)],
+  )
 }
 
 ///|
@@ -245,6 +350,27 @@ test "Python PrefixSpan scalar differential 2/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 2), ("2", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2), ("3", 2), ("0", 1), ("1;0", 1)],
+  )
 }
 
 ///|
@@ -297,6 +423,27 @@ test "Python PrefixSpan scalar differential 3/1" {
       ("3;3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2), ("1;0", 2), ("2", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -312,6 +459,27 @@ test "Python PrefixSpan scalar differential 3/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("1", 3), ("1;0", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2), ("1;0", 2), ("2", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -352,6 +520,27 @@ test "Python PrefixSpan scalar differential 4/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2), ("3", 2), ("0;0", 2), ("0;1", 2)],
+  )
 }
 
 ///|
@@ -377,6 +566,27 @@ test "Python PrefixSpan scalar differential 4/2" {
       ("1;0", 2),
       ("3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2), ("3", 2), ("0;0", 2), ("0;1", 2)],
   )
 }
 
@@ -440,6 +650,27 @@ test "Python PrefixSpan scalar differential 5/1" {
       ("3;1", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 2), ("1;2", 2), ("2;2", 2)],
+  )
 }
 
 ///|
@@ -466,6 +697,27 @@ test "Python PrefixSpan scalar differential 5/2" {
       ("3;1", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 2), ("1;2", 2), ("2;2", 2)],
+  )
 }
 
 ///|
@@ -488,6 +740,27 @@ test "Python PrefixSpan scalar differential 6/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 1), ("1", 1), ("0;1", 1), ("3;0", 1)],
+  )
 }
 
 ///|
@@ -498,6 +771,27 @@ test "Python PrefixSpan scalar differential 6/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("3", 3)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 1), ("1", 1), ("0;1", 1), ("3;0", 1)],
+  )
 }
 
 ///|
@@ -532,6 +826,27 @@ test "Python PrefixSpan scalar differential 7/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("3", 2), ("0", 1), ("0;2", 1)],
+  )
 }
 
 ///|
@@ -547,6 +862,27 @@ test "Python PrefixSpan scalar differential 7/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 3), ("2", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("3", 2), ("0", 1), ("0;2", 1)],
+  )
 }
 
 ///|
@@ -588,6 +924,27 @@ test "Python PrefixSpan scalar differential 8/1" {
       ("3;3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("1", 2), ("2", 2), ("0", 1), ("0;2", 1)],
+  )
 }
 
 ///|
@@ -603,6 +960,27 @@ test "Python PrefixSpan scalar differential 8/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 2), ("2", 2), ("3", 3)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("1", 2), ("2", 2), ("0", 1), ("0;2", 1)],
+  )
 }
 
 ///|
@@ -652,6 +1030,27 @@ test "Python PrefixSpan scalar differential 9/1" {
       ("3;3;3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("2", 2), ("3;2", 2), ("0", 1), ("1", 1)],
+  )
 }
 
 ///|
@@ -667,6 +1066,27 @@ test "Python PrefixSpan scalar differential 9/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("2", 2), ("3", 3), ("3;2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("2", 2), ("3;2", 2), ("0", 1), ("1", 1)],
+  )
 }
 
 ///|
@@ -722,6 +1142,27 @@ test "Python PrefixSpan scalar differential 10/1" {
       ("3;3;2;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("3", 2), ("0;2", 2), ("1", 1)],
+  )
 }
 
 ///|
@@ -737,6 +1178,27 @@ test "Python PrefixSpan scalar differential 10/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("0;2", 2), ("2", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("3", 2), ("0;2", 2), ("1", 1)],
+  )
 }
 
 ///|
@@ -778,6 +1240,27 @@ test "Python PrefixSpan scalar differential 11/1" {
       ("3;1;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2), ("3", 2), ("3;0", 2), ("2", 1)],
+  )
 }
 
 ///|
@@ -793,6 +1276,27 @@ test "Python PrefixSpan scalar differential 11/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("1", 2), ("3", 2), ("3;0", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 2), ("3", 2), ("3;0", 2), ("2", 1)],
+  )
 }
 
 ///|
@@ -835,6 +1339,27 @@ test "Python PrefixSpan scalar differential 12/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3), ("0;0", 2), ("0;1", 2), ("1;0", 2)],
+  )
 }
 
 ///|
@@ -852,6 +1377,27 @@ test "Python PrefixSpan scalar differential 12/2" {
   assert_eq(
     actual,
     Map([("0", 3), ("0;0", 2), ("0;1", 2), ("1", 4), ("1;0", 2), ("1;1", 2)]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3), ("0;0", 2), ("0;1", 2), ("1;0", 2)],
   )
 }
 
@@ -883,6 +1429,27 @@ test "Python PrefixSpan scalar differential 13/1" {
       ("3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("2", 2), ("3", 1), ("0;1", 1)],
+  )
 }
 
 ///|
@@ -898,6 +1465,27 @@ test "Python PrefixSpan scalar differential 13/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("1", 2), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("2", 2), ("3", 1), ("0;1", 1)],
+  )
 }
 
 ///|
@@ -950,6 +1538,27 @@ test "Python PrefixSpan scalar differential 14/1" {
       ("3;3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 2), ("1", 2), ("0;3", 2), ("3;0", 2)],
+  )
 }
 
 ///|
@@ -976,6 +1585,27 @@ test "Python PrefixSpan scalar differential 14/2" {
       ("3;0;3", 2),
       ("3;3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 3), ("0", 2), ("1", 2), ("0;3", 2), ("3;0", 2)],
   )
 }
 
@@ -1017,6 +1647,27 @@ test "Python PrefixSpan scalar differential 15/1" {
       ("3;3;2;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("2;1", 2), ("3", 1), ("1;1", 1)],
+  )
 }
 
 ///|
@@ -1032,6 +1683,27 @@ test "Python PrefixSpan scalar differential 15/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 3), ("2", 2), ("2;1", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("2;1", 2), ("3", 1), ("1;1", 1)],
+  )
 }
 
 ///|
@@ -1042,6 +1714,27 @@ test "Python PrefixSpan scalar differential 16/1" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 1), ("1", 1), ("2", 1), ("3", 2), ("3;0", 1)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 2), ("0", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 2), ("0", 1), ("1", 1), ("2", 1), ("3;0", 1)],
+  )
 }
 
 ///|
@@ -1052,6 +1745,27 @@ test "Python PrefixSpan scalar differential 16/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 2), ("0", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 2), ("0", 1), ("1", 1), ("2", 1), ("3;0", 1)],
+  )
 }
 
 ///|
@@ -1101,6 +1815,27 @@ test "Python PrefixSpan scalar differential 17/1" {
       ("3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("0;0", 2), ("1;0", 2), ("1;0;0", 2)],
+  )
 }
 
 ///|
@@ -1118,6 +1853,27 @@ test "Python PrefixSpan scalar differential 17/2" {
   assert_eq(
     actual,
     Map([("0", 2), ("0;0", 2), ("1", 2), ("1;0", 2), ("1;0;0", 2)]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("0;0", 2), ("1;0", 2), ("1;0;0", 2)],
   )
 }
 
@@ -1163,6 +1919,27 @@ test "Python PrefixSpan scalar differential 18/1" {
       ("3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3), ("2;0", 2), ("2;2", 2), ("1", 1)],
+  )
 }
 
 ///|
@@ -1178,6 +1955,27 @@ test "Python PrefixSpan scalar differential 18/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("2", 3), ("2;0", 2), ("2;2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3), ("2;0", 2), ("2;2", 2), ("1", 1)],
+  )
 }
 
 ///|
@@ -1247,6 +2045,27 @@ test "Python PrefixSpan scalar differential 19/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3), ("2", 2), ("3", 2), ("1;0", 2)],
+  )
 }
 
 ///|
@@ -1264,6 +2083,27 @@ test "Python PrefixSpan scalar differential 19/2" {
   assert_eq(
     actual,
     Map([("0", 3), ("1", 4), ("1;0", 2), ("2", 2), ("2;3", 2), ("3", 2)]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3), ("2", 2), ("3", 2), ("1;0", 2)],
   )
 }
 
@@ -1358,6 +2198,27 @@ test "Python PrefixSpan scalar differential 20/1" {
       ("3;3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("2", 3), ("3", 3), ("2;3", 3), ("3;3", 3)],
+  )
 }
 
 ///|
@@ -1396,6 +2257,27 @@ test "Python PrefixSpan scalar differential 20/2" {
       ("3;3;1", 2),
       ("3;3;2", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("2", 3), ("3", 3), ("2;3", 3), ("3;3", 3)],
   )
 }
 
@@ -1464,6 +2346,27 @@ test "Python PrefixSpan scalar differential 21/1" {
       ("3;3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("2", 2), ("3", 2), ("1;2", 2)],
+  )
 }
 
 ///|
@@ -1489,6 +2392,27 @@ test "Python PrefixSpan scalar differential 21/2" {
       ("2;3", 2),
       ("3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("2", 2), ("3", 2), ("1;2", 2)],
   )
 }
 
@@ -1539,6 +2463,27 @@ test "Python PrefixSpan scalar differential 22/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("2", 3), ("2;3", 3), ("1", 2), ("1;1", 2)],
+  )
 }
 
 ///|
@@ -1566,6 +2511,27 @@ test "Python PrefixSpan scalar differential 22/2" {
       ("2;3", 3),
       ("3", 4),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("2", 3), ("2;3", 3), ("1", 2), ("1;1", 2)],
   )
 }
 
@@ -1602,6 +2568,27 @@ test "Python PrefixSpan scalar differential 23/1" {
       ("3;2;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("1", 1), ("3", 1), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -1617,6 +2604,27 @@ test "Python PrefixSpan scalar differential 23/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("1", 1), ("3", 1), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -1663,6 +2671,27 @@ test "Python PrefixSpan scalar differential 24/1" {
       ("3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("3", 2), ("0;0", 2), ("3;0", 2)],
+  )
 }
 
 ///|
@@ -1678,6 +2707,27 @@ test "Python PrefixSpan scalar differential 24/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("0;0", 2), ("2", 2), ("3", 2), ("3;0", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("3", 2), ("0;0", 2), ("3;0", 2)],
+  )
 }
 
 ///|
@@ -1736,6 +2786,27 @@ test "Python PrefixSpan scalar differential 25/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 2), ("2", 2), ("3", 2), ("0;1", 2)],
+  )
 }
 
 ///|
@@ -1761,6 +2832,27 @@ test "Python PrefixSpan scalar differential 25/2" {
       ("2", 2),
       ("3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 2), ("2", 2), ("3", 2), ("0;1", 2)],
   )
 }
 
@@ -1851,6 +2943,27 @@ test "Python PrefixSpan scalar differential 26/1" {
       ("3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 3), ("3;1", 3), ("0", 2)],
+  )
 }
 
 ///|
@@ -1883,6 +2996,27 @@ test "Python PrefixSpan scalar differential 26/2" {
       ("3;3", 2),
       ("3;3;1", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 3), ("3;1", 3), ("0", 2)],
   )
 }
 
@@ -1954,6 +3088,27 @@ test "Python PrefixSpan scalar differential 27/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3), ("2", 3), ("1;2", 3), ("3", 2)],
+  )
 }
 
 ///|
@@ -1982,6 +3137,27 @@ test "Python PrefixSpan scalar differential 27/2" {
       ("2;3", 2),
       ("3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3), ("2", 3), ("1;2", 3), ("3", 2)],
   )
 }
 
@@ -2013,6 +3189,27 @@ test "Python PrefixSpan scalar differential 28/1" {
       ("3;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2), ("2;2", 2), ("1", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -2028,6 +3225,27 @@ test "Python PrefixSpan scalar differential 28/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("2", 2), ("2;2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2), ("2;2", 2), ("1", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -2067,6 +3285,27 @@ test "Python PrefixSpan scalar differential 29/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("1", 1), ("3", 1), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -2082,6 +3321,27 @@ test "Python PrefixSpan scalar differential 29/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 2), ("1", 1), ("3", 1), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -2121,6 +3381,27 @@ test "Python PrefixSpan scalar differential 30/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3), ("3", 2), ("2;3", 2), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -2136,6 +3417,27 @@ test "Python PrefixSpan scalar differential 30/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("2", 3), ("2;3", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("2", 3), ("3", 2), ("2;3", 2), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -2174,6 +3476,27 @@ test "Python PrefixSpan scalar differential 31/1" {
       ("3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3), ("2", 2), ("0;3", 2), ("1", 1)],
+  )
 }
 
 ///|
@@ -2189,6 +3512,27 @@ test "Python PrefixSpan scalar differential 31/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("0;3", 2), ("2", 2), ("3", 3)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3), ("2", 2), ("0;3", 2), ("1", 1)],
+  )
 }
 
 ///|
@@ -2224,6 +3568,27 @@ test "Python PrefixSpan scalar differential 32/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2), ("3;2", 2), ("0", 1), ("1", 1)],
+  )
 }
 
 ///|
@@ -2239,6 +3604,27 @@ test "Python PrefixSpan scalar differential 32/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("2", 2), ("3", 2), ("3;2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2), ("3;2", 2), ("0", 1), ("1", 1)],
+  )
 }
 
 ///|
@@ -2297,6 +3683,27 @@ test "Python PrefixSpan scalar differential 33/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 2), ("1", 2), ("2", 2), ("2;2", 2)],
+  )
 }
 
 ///|
@@ -2312,6 +3719,27 @@ test "Python PrefixSpan scalar differential 33/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("1", 2), ("2", 2), ("2;2", 2), ("3", 4)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 2), ("1", 2), ("2", 2), ("2;2", 2)],
+  )
 }
 
 ///|
@@ -2359,6 +3787,27 @@ test "Python PrefixSpan scalar differential 34/1" {
       ("3;1;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3), ("3", 2), ("0;1", 2), ("1;0", 2)],
+  )
 }
 
 ///|
@@ -2376,6 +3825,27 @@ test "Python PrefixSpan scalar differential 34/2" {
   assert_eq(
     actual,
     Map([("0", 4), ("0;1", 2), ("1", 3), ("1;0", 2), ("3", 2), ("3;1", 2)]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3), ("3", 2), ("0;1", 2), ("1;0", 2)],
   )
 }
 
@@ -2435,6 +3905,27 @@ test "Python PrefixSpan scalar differential 35/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2), ("3", 2), ("0;1", 2), ("3;1", 2)],
+  )
 }
 
 ///|
@@ -2450,6 +3941,27 @@ test "Python PrefixSpan scalar differential 35/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("0;1", 2), ("1", 3), ("3", 2), ("3;1", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("0", 2), ("3", 2), ("0;1", 2), ("3;1", 2)],
+  )
 }
 
 ///|
@@ -2514,6 +4026,27 @@ test "Python PrefixSpan scalar differential 36/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("3", 3), ("1", 2), ("0;1", 2), ("0;3", 2)],
+  )
 }
 
 ///|
@@ -2544,6 +4077,27 @@ test "Python PrefixSpan scalar differential 36/2" {
       ("3;1;1", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("3", 3), ("1", 2), ("0;1", 2), ("0;3", 2)],
+  )
 }
 
 ///|
@@ -2554,6 +4108,27 @@ test "Python PrefixSpan scalar differential 37/1" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("2", 1)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 1)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 1)],
+  )
 }
 
 ///|
@@ -2564,6 +4139,27 @@ test "Python PrefixSpan scalar differential 37/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 1)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 1)],
+  )
 }
 
 ///|
@@ -2616,6 +4212,27 @@ test "Python PrefixSpan scalar differential 38/1" {
       ("3;3;2;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 4), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 4), ("0", 2), ("1", 2), ("3", 2), ("2;0", 2)],
+  )
 }
 
 ///|
@@ -2642,6 +4259,27 @@ test "Python PrefixSpan scalar differential 38/2" {
       ("3", 2),
       ("3;1", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 4), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 4), ("0", 2), ("1", 2), ("3", 2), ("2;0", 2)],
   )
 }
 
@@ -2672,6 +4310,27 @@ test "Python PrefixSpan scalar differential 39/1" {
       ("3;3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 1)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 1), ("1", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 1), ("1", 1), ("2", 1), ("3", 1), ("3;0", 1)],
+  )
 }
 
 ///|
@@ -2687,6 +4346,27 @@ test "Python PrefixSpan scalar differential 39/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 1)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 1), ("1", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 1), ("1", 1), ("2", 1), ("3", 1), ("3;0", 1)],
+  )
 }
 
 ///|
@@ -2760,6 +4440,27 @@ test "Python PrefixSpan scalar differential 40/1" {
       ("3;2;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 3), ("0", 2), ("1", 2), ("3", 2), ("0;1", 2)],
+  )
 }
 
 ///|
@@ -2786,6 +4487,27 @@ test "Python PrefixSpan scalar differential 40/2" {
       ("2;2", 2),
       ("3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 3), ("0", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 3), ("0", 2), ("1", 2), ("3", 2), ("0;1", 2)],
   )
 }
 
@@ -2851,6 +4573,27 @@ test "Python PrefixSpan scalar differential 41/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("2", 3), ("3", 3), ("1", 2), ("0;1", 2)],
+  )
 }
 
 ///|
@@ -2878,6 +4621,27 @@ test "Python PrefixSpan scalar differential 41/2" {
       ("3", 3),
       ("3;1", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("2", 3), ("3", 3), ("1", 2), ("0;1", 2)],
   )
 }
 
@@ -2934,6 +4698,27 @@ test "Python PrefixSpan scalar differential 42/1" {
       ("3;2;1;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3), ("1;1", 3), ("2", 2), ("3", 2)],
+  )
 }
 
 ///|
@@ -2963,6 +4748,27 @@ test "Python PrefixSpan scalar differential 42/2" {
       ("2;1;1", 2),
       ("3", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 3), ("1;1", 3), ("2", 2), ("3", 2)],
   )
 }
 
@@ -3029,6 +4835,27 @@ test "Python PrefixSpan scalar differential 43/1" {
       ("3;2;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("3", 3), ("0", 2), ("2", 2), ("0;1", 2)],
+  )
 }
 
 ///|
@@ -3057,6 +4884,27 @@ test "Python PrefixSpan scalar differential 43/2" {
       ("3", 3),
       ("3;1", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("3", 3), ("0", 2), ("2", 2), ("0;1", 2)],
   )
 }
 
@@ -3123,6 +4971,27 @@ test "Python PrefixSpan scalar differential 44/1" {
       ("3;3;2;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 4)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 4), ("1;3", 4), ("1;1", 3), ("3;1", 3)],
+  )
 }
 
 ///|
@@ -3160,6 +5029,27 @@ test "Python PrefixSpan scalar differential 44/2" {
       ("3;2", 2),
       ("3;2;1", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 4)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("3", 4), ("1;3", 4), ("1;1", 3), ("3;1", 3)],
   )
 }
 
@@ -3216,6 +5106,27 @@ test "Python PrefixSpan scalar differential 45/1" {
       ("3;1;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 3), ("1", 3), ("1;0", 3), ("1;3", 3)],
+  )
 }
 
 ///|
@@ -3249,6 +5160,27 @@ test "Python PrefixSpan scalar differential 45/2" {
       ("3;1", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("3", 4), ("0", 3), ("1", 3), ("1;0", 3), ("1;3", 3)],
+  )
 }
 
 ///|
@@ -3273,6 +5205,27 @@ test "Python PrefixSpan scalar differential 46/1" {
       ("2;2;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2), ("0;2", 2), ("0;0", 1), ("2;0", 1)],
+  )
 }
 
 ///|
@@ -3283,6 +5236,27 @@ test "Python PrefixSpan scalar differential 46/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("0;2", 2), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2), ("0;2", 2), ("0;0", 1), ("2;0", 1)],
+  )
 }
 
 ///|
@@ -3327,6 +5301,27 @@ test "Python PrefixSpan scalar differential 47/1" {
       ("2;2;1;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("2;1", 2), ("2;2", 2), ("2;2;1", 2)],
+  )
 }
 
 ///|
@@ -3344,6 +5339,27 @@ test "Python PrefixSpan scalar differential 47/2" {
   assert_eq(
     actual,
     Map([("1", 3), ("2", 2), ("2;1", 2), ("2;2", 2), ("2;2;1", 2)]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("2;1", 2), ("2;2", 2), ("2;2;1", 2)],
   )
 }
 
@@ -3370,6 +5386,27 @@ test "Python PrefixSpan scalar differential 48/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 1), ("3", 1), ("2;1", 1), ("2;3", 1)],
+  )
 }
 
 ///|
@@ -3380,6 +5417,27 @@ test "Python PrefixSpan scalar differential 48/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 1), ("3", 1), ("2;1", 1), ("2;3", 1)],
+  )
 }
 
 ///|
@@ -3412,6 +5470,27 @@ test "Python PrefixSpan scalar differential 49/1" {
       ("3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2), ("0;2", 2), ("1", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -3422,6 +5501,27 @@ test "Python PrefixSpan scalar differential 49/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("0;2", 2), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("2", 2), ("0;2", 2), ("1", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -3472,6 +5572,27 @@ test "Python PrefixSpan scalar differential 50/1" {
       ("3;3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("0", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("0", 1), ("2", 1), ("3", 1), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -3487,6 +5608,27 @@ test "Python PrefixSpan scalar differential 50/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("0", 1)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("0", 1), ("2", 1), ("3", 1), ("0;0", 1)],
+  )
 }
 
 ///|
@@ -3571,6 +5713,27 @@ test "Python PrefixSpan scalar differential 51/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 3), ("1;1", 3), ("2;1", 3)],
+  )
 }
 
 ///|
@@ -3601,6 +5764,27 @@ test "Python PrefixSpan scalar differential 51/2" {
       ("3;1", 2),
       ("3;2", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 3), ("1;1", 3), ("2;1", 3)],
   )
 }
 
@@ -3636,6 +5820,27 @@ test "Python PrefixSpan scalar differential 52/1" {
       ("3;3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 2), ("3;3", 2), ("1", 1), ("2", 1)],
+  )
 }
 
 ///|
@@ -3651,6 +5856,27 @@ test "Python PrefixSpan scalar differential 52/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("3", 2), ("3;3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 2), ("3;3", 2), ("1", 1), ("2", 1)],
+  )
 }
 
 ///|
@@ -3675,6 +5901,27 @@ test "Python PrefixSpan scalar differential 53/1" {
       ("3;2", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2), ("0", 1), ("3", 1), ("0;1", 1)],
+  )
 }
 
 ///|
@@ -3685,6 +5932,27 @@ test "Python PrefixSpan scalar differential 53/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 2), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2), ("0", 1), ("3", 1), ("0;1", 1)],
+  )
 }
 
 ///|
@@ -3746,6 +6014,27 @@ test "Python PrefixSpan scalar differential 54/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2), ("2;3", 2), ("0", 1), ("1", 1)],
+  )
 }
 
 ///|
@@ -3761,6 +6050,27 @@ test "Python PrefixSpan scalar differential 54/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("2", 2), ("2;3", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("2", 2), ("3", 2), ("2;3", 2), ("0", 1), ("1", 1)],
+  )
 }
 
 ///|
@@ -3819,6 +6129,27 @@ test "Python PrefixSpan scalar differential 55/1" {
       ("3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 3), ("2;1", 2), ("2;2", 2)],
+  )
 }
 
 ///|
@@ -3836,6 +6167,27 @@ test "Python PrefixSpan scalar differential 55/2" {
   assert_eq(
     actual,
     Map([("1", 3), ("2", 3), ("2;1", 2), ("2;2", 2), ("2;3", 2), ("3", 3)]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 3), ("3", 3), ("2;1", 2), ("2;2", 2)],
   )
 }
 
@@ -3884,6 +6236,27 @@ test "Python PrefixSpan scalar differential 56/1" {
       ("3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("0;0", 2), ("2", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -3899,6 +6272,27 @@ test "Python PrefixSpan scalar differential 56/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 2), ("0;0", 2), ("1", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 2), ("1", 2), ("0;0", 2), ("2", 1), ("3", 1)],
+  )
 }
 
 ///|
@@ -3957,6 +6351,27 @@ test "Python PrefixSpan scalar differential 57/1" {
       ("3;3;0", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 2), ("2", 2), ("0;1", 2), ("3", 1)],
+  )
 }
 
 ///|
@@ -3972,6 +6387,27 @@ test "Python PrefixSpan scalar differential 57/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 4), ("0;1", 2), ("1", 2), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 4), ("1", 2), ("2", 2), ("0;1", 2), ("3", 1)],
+  )
 }
 
 ///|
@@ -4024,6 +6460,27 @@ test "Python PrefixSpan scalar differential 58/1" {
       ("3;3;3", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("0;0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("0;0", 3), ("1", 2), ("2", 2), ("3", 1)],
+  )
 }
 
 ///|
@@ -4039,6 +6496,27 @@ test "Python PrefixSpan scalar differential 58/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("0", 3), ("0;0", 3), ("1", 2), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("0;0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("0;0", 3), ("1", 2), ("2", 2), ("3", 1)],
+  )
 }
 
 ///|
@@ -4120,6 +6598,27 @@ test "Python PrefixSpan scalar differential 59/1" {
       ("3;3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3), ("3;3", 3), ("1", 2), ("2", 2)],
+  )
 }
 
 ///|
@@ -4149,6 +6648,27 @@ test "Python PrefixSpan scalar differential 59/2" {
       ("3;2", 2),
       ("3;3", 3),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("3", 3), ("3;3", 3), ("1", 2), ("2", 2)],
   )
 }
 
@@ -4194,6 +6714,27 @@ test "Python PrefixSpan scalar differential 60/1" {
       ("3;3;1", 1),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2), ("3", 2), ("0", 1), ("0;1", 1)],
+  )
 }
 
 ///|
@@ -4209,6 +6750,27 @@ test "Python PrefixSpan scalar differential 60/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 2), ("2", 2), ("3", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 2), ("2", 2), ("3", 2), ("0", 1), ("0;1", 1)],
+  )
 }
 
 ///|
@@ -4285,6 +6847,27 @@ test "Python PrefixSpan scalar differential 61/1" {
       ("3;1;1", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3), ("0;1", 3), ("1;0", 3), ("2", 2)],
+  )
 }
 
 ///|
@@ -4321,6 +6904,27 @@ test "Python PrefixSpan scalar differential 61/2" {
       ("3;1", 2),
       ("3;1;1", 2),
     ]),
+  )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("0", 3), ("1", 3), ("0;1", 3), ("1;0", 3), ("2", 2)],
   )
 }
 
@@ -4369,6 +6973,27 @@ test "Python PrefixSpan scalar differential 62/1" {
       ("3;3", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3), ("3", 3), ("1;0", 3), ("0;3", 2)],
+  )
 }
 
 ///|
@@ -4400,6 +7025,27 @@ test "Python PrefixSpan scalar differential 62/2" {
       ("3;3", 2),
     ]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 4), ("0", 3), ("3", 3), ("1;0", 3), ("0;3", 2)],
+  )
 }
 
 ///|
@@ -4413,6 +7059,27 @@ test "Python PrefixSpan scalar differential 63/1" {
     actual,
     Map([("1", 3), ("1;2", 1), ("2", 2), ("2;1", 1), ("3", 1), ("3;1", 1)]),
   )
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("3", 1), ("1;2", 1), ("2;1", 1)],
+  )
 }
 
 ///|
@@ -4423,4 +7090,25 @@ test "Python PrefixSpan scalar differential 63/2" {
     actual[@moonseqmine.pattern_key(record.pattern)] = record.support
   }
   assert_eq(actual, Map([("1", 3), ("2", 2)]))
+  let ranked_1 = @moonseqmine.top_k(db, 1, max_items=4)
+  assert_eq(
+    ranked_1.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3)],
+  )
+  let ranked_2 = @moonseqmine.top_k(db, 2, max_items=4)
+  assert_eq(
+    ranked_2.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2)],
+  )
+  let ranked_5 = @moonseqmine.top_k(db, 5, max_items=4)
+  assert_eq(
+    ranked_5.map(fn(record) {
+      (@moonseqmine.pattern_key(record.pattern), record.support)
+    }),
+    [("1", 3), ("2", 2), ("3", 1), ("1;2", 1), ("2;1", 1)],
+  )
 }

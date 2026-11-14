@@ -33,6 +33,12 @@
 | Lyl66655/moon-survival@0.2.4 | src/kaplan_meier.mbt与对应测试、Cox API | 直接重复生存候选，否决 |
 | bobzhang/prolog@0.1.6 | builtins统一调用、prolog_test.mbt的 cyclic terms occurs check 测试 | 直接重复逻辑统一候选，否决 |
 
+## 修订后的 Top-K 语义复核
+
+邮件复审后，对新增 `top_k` 的核心行为重新做了反向查重和边界核对。检索覆盖 `top-k sequence mining`、`top_k`、`PrefixSpan top-k`、`sequential pattern ranking` 及其 API/源码/测试变体，并回看上表的 processlens、moonconcept、fst、BioSeqs 和 extractor。已记录的近邻分别是事件流阶段/CEP、无序属性闭包、生字符串子序列查询、生物序列统计或抽取工具；它们没有提供本项目的“有序项集数据库 + 每记录一次支持 + 有限模式深度 + 无位置约束精确 Top-K”公共契约。此复核没有把同名函数缺失当作唯一依据，仍以行为模型和测试边界判断。
+
+本项目 `top_k` 的可验证边界是：对无位置约束、`max_items` 限定的有限模式族，使用动态第 K 支持度阈值剪枝，按支持度降序和 `pattern_key` 稳定排序；位置约束仍由 `mine`、支持查询和证据 API 提供。独立 powerset oracle 覆盖多项项集、重复嵌入去重、多位 ID、并列截断和资源预算；PrefixSpan-py 0.5.2 差分只覆盖标量项集，脚本实际调用上游 `frequent(1)` 生成支持预期，不宣称上游具有同名 Top-K API。该新增范围仍不能等同于 BIDE+、全局闭合序列挖掘或完整规则套件。
+
 ## 选择后的功能边界与可验证交付
 
 整数标签的规范化项集序列；序列级支持计数；I/S投影数据库增长；可检查的出现证据；资源预算超限报错；有界模式族内closed/maximal筛选；严格SPMF/JSON输入输出；三个可运行工作流。独立小规模穷举与Python标量序列参考差分。不提供分布式Spark运行时、实时CEP、流程网发现、任意生物对齐或因果推断。

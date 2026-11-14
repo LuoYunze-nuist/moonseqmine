@@ -40,7 +40,7 @@ test "ordered itemsets" {
 
 - `database`、`pattern` 深拷贝输入并将各项集排序去重，拒绝负 ID、空项集和空模式。空数据库/空序列有效。公共结构可手工构造，因此接受它们的计算入口会重新验证规范性。
 - `mine(db, options(count, ...), constraints=...)` 同时执行项集内 I-extension 与后继项集 S-extension。`mine_with_stats` 还返回投影扫描次数、累计生成状态数、输出模式数。
-- `top_k(db, k, max_items=..., max_states=..., max_steps=...)` 返回无位置约束下支持度最高的最多 `k` 个模式；结果按支持度降序、`pattern_key` 升序稳定排序。它使用动态第 K 支持度阈值剪枝，`k`、模式深度、状态数和扫描步数均有硬校验；不接受 `max_gap`/`max_span`，因为该 API 的阈值剪枝只对无约束支持保证反单调语义。
+- `top_k(db, k, max_items=..., max_states=..., max_steps=...)` 返回无位置约束下支持度最高的最多 `k` 个模式；结果按支持度降序、`pattern_key` 的稳定升序排序（MoonBit 当前字符串序以长度、再以字典序比较）。它使用动态第 K 支持度阈值剪枝；`k`、`max_items`、状态数和扫描步数会校验，达到 `max_items` 时停止继续扩展，状态数或扫描步数预算耗尽才抛出 `Resource`。它不接受 `max_gap`/`max_span`，因为该 API 的阈值剪枝只对无约束支持保证反单调语义。
 - `options` 默认 `max_items=8`、`max_patterns=10000`、`max_states=1000000`、`max_steps=10000000`。`max_items` 限定所声明的模式族，合法范围 1..64；其他三个预算一旦用尽就抛出 `Resource`，不会返回伪装成完整结果的截断数组。`min_support` 必须为正整数，超过数据库大小返回空结果。
 - `constraints(max_gap=0)` 表示相邻匹配项集之间不能跳过项集；`max_span=2` 表示末位置减首位置最多为 2。均为零基项集位置，非时间秒数。I-extension 不增加位置差。未指定的约束不限制。
 - `support` / `supporting_ids` 返回每记录一次的支持及零基序列 ID；`witnesses` 枚举完整嵌入；`verify_witness` 验证外部保存的证据。证据数量/工作超限报错，不静默截断。证据模式最多 64 个项集。
