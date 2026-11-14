@@ -68,6 +68,8 @@ pub fn support_index(Database) -> SupportIndex raise MiningError
 
 pub fn supporting_ids(Database, Pattern, constraints? : Constraints, max_steps? : Int32) -> Array[Int32] raise MiningError
 
+pub fn top_k(Database, Int32, max_items? : Int32, max_states? : Int32, max_steps? : Int32) -> Array[FrequentPattern] raise MiningError
+
 pub fn validate_constraints(Constraints) -> Unit raise MiningError
 
 pub fn validate_database(Database) -> Unit raise MiningError

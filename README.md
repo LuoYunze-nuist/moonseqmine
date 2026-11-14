@@ -11,7 +11,7 @@ MoonSeqMine 是用 MoonBit 实现的频繁序列挖掘基础库。输入是**多
 在现有模块根目录安装精确版本：
 
 ```sh
-moon add LuoYunze-nuist/moonseqmine@0.1.0
+moon add LuoYunze-nuist/moonseqmine@0.2.0
 ```
 
 在调用包的 `moon.pkg` 中导入：
@@ -40,6 +40,7 @@ test "ordered itemsets" {
 
 - `database`、`pattern` 深拷贝输入并将各项集排序去重，拒绝负 ID、空项集和空模式。空数据库/空序列有效。公共结构可手工构造，因此接受它们的计算入口会重新验证规范性。
 - `mine(db, options(count, ...), constraints=...)` 同时执行项集内 I-extension 与后继项集 S-extension。`mine_with_stats` 还返回投影扫描次数、累计生成状态数、输出模式数。
+- `top_k(db, k, max_items=..., max_states=..., max_steps=...)` 返回无位置约束下支持度最高的最多 `k` 个模式；结果按支持度降序、`pattern_key` 升序稳定排序。它使用动态第 K 支持度阈值剪枝，`k`、模式深度、状态数和扫描步数均有硬校验；不接受 `max_gap`/`max_span`，因为该 API 的阈值剪枝只对无约束支持保证反单调语义。
 - `options` 默认 `max_items=8`、`max_patterns=10000`、`max_states=1000000`、`max_steps=10000000`。`max_items` 限定所声明的模式族，合法范围 1..64；其他三个预算一旦用尽就抛出 `Resource`，不会返回伪装成完整结果的截断数组。`min_support` 必须为正整数，超过数据库大小返回空结果。
 - `constraints(max_gap=0)` 表示相邻匹配项集之间不能跳过项集；`max_span=2` 表示末位置减首位置最多为 2。均为零基项集位置，非时间秒数。I-extension 不增加位置差。未指定的约束不限制。
 - `support` / `supporting_ids` 返回每记录一次的支持及零基序列 ID；`witnesses` 枚举完整嵌入；`verify_witness` 验证外部保存的证据。证据数量/工作超限报错，不静默截断。证据模式最多 64 个项集。
@@ -73,6 +74,15 @@ moon run src/examples/symbols --target wasm-gc --deny-warn
 2. **服务事件**：SPMF 请求批次，经邻接约束挖掘、证据验证及群组比较，输出 6 个模式和 2 个完整嵌入；测试断言保留成功请求与重试请求的差异。
 3. **符号序列**：三条合成符号记录，经挖掘、支持索引和描述性规则，输出 9 个频繁模式、6 条规则及 `A -> G -> T : 2`。这是离散序列挖掘，不是基因比对。
 
+Top-K 也可直接用于候选排行：
+
+```moonbit
+let ranked = @seq.top_k(db, 4, max_items=3)
+for record in ranked {
+  println("\{ @seq.pattern_key(record.pattern) }: \{ record.support }")
+}
+```
+
 ## 检查与测试
 
 ```sh
@@ -85,7 +95,7 @@ moon test --deny-warn --target wasm-gc
 
 将目标改为 `wasm`、`js`、`native` 可重复其他后端检查、构建及测试。CI 对四个目标都执行这些步骤并运行三个示例；本机 Windows 未配置 C 编译器，native 实际运行证据由 Ubuntu CI 提供。
 
-核心测试包括 864 次独立源序列位置/项子集穷举对照（非调用同一挖掘器作期望），以及 128 个 Python PrefixSpan 标量序列差分用例。仅生成的测试向量不计入生产行数。可重建参考向量：
+核心测试包括 864 次独立源序列位置/项子集穷举对照（非调用同一挖掘器作期望）、Top-K 多个 `k` 值与独立 powerset oracle 对照，以及 128 个 Python PrefixSpan 标量序列差分用例。仅生成的测试向量不计入生产行数。可重建参考向量：
 
 ```sh
 python -m pip install -r scripts/reference-requirements.txt
@@ -97,7 +107,7 @@ moon test --deny-warn
 
 ## 已知限制
 
-频繁模式数可能指数增长；这是有明确预算的内存型实现，不承诺 Spark 性能、分布式、GPU 或无限大数据库。工作计数度量投影扫描/匹配步骤，不是 CPU 指令或总耗时，输入校验、倒排候选交集、输出排序不计入该计数；上限不能代替进程级内存/时间隔离。公开数组是可变值，调用期间不得并发修改输入。所有闭合/极大判断限于输入模式族，规则限于无约束描述统计。
+频繁模式数可能指数增长；这是有明确预算的内存型实现，不承诺 Spark 性能、分布式、GPU 或无限大数据库。工作计数度量投影扫描/匹配步骤，不是 CPU 指令或总耗时，输入校验、倒排候选交集、输出排序不计入该计数；上限不能代替进程级内存/时间隔离。公开数组是可变值，调用期间不得并发修改输入。所有闭合/极大判断限于输入模式族，规则限于无约束描述统计；Top-K 只提供无位置约束排行，不是 BIDE+ 闭合模式挖掘或分布式 Spark runtime。
 
 不提供实时 CEP、水位线、Petri-net 流程发现、无序 FCA 引擎、序列比对或统计显著性认证。
 

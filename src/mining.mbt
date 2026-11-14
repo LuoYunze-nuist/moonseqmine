@@ -143,13 +143,6 @@ fn grow_prefix(
     keys.sort()
     for item in keys {
       let next_states = projections[item]
-      let count = projection_support(next_states)
-      if count < budget.options.min_support {
-        continue
-      }
-      if out.length() >= budget.options.max_patterns {
-        raise Resource("pattern result budget exceeded")
-      }
       let itemsets = prefix.itemsets.map(fn(event) { event.copy() })
       if same_event {
         itemsets[itemsets.length() - 1].push(item)
@@ -157,6 +150,13 @@ fn grow_prefix(
         itemsets.push([item])
       }
       let next = Pattern::{ itemsets, }
+      let count = projection_support(next_states)
+      if count < budget.options.min_support {
+        continue
+      }
+      if out.length() >= budget.options.max_patterns {
+        raise Resource("pattern result budget exceeded")
+      }
       // Output arrays do not alias the prefix used to grow descendants.
       out.push({
         pattern: { itemsets: itemsets.map(fn(event) { event.copy() }), },
@@ -165,6 +165,133 @@ fn grow_prefix(
       grow_prefix(db, next, next_states, depth + 1, c, budget, out)
     }
   }
+}
+
+///|
+fn top_k_threshold(results : Array[FrequentPattern], k : Int32) -> Int32 {
+  if results.length() < k {
+    1
+  } else {
+    results[results.length() - 1].support
+  }
+}
+
+///|
+fn insert_top_k(
+  results : Array[FrequentPattern],
+  record : FrequentPattern,
+  k : Int32,
+) -> Unit {
+  results.push({
+    pattern: {
+      itemsets: record.pattern.itemsets.map(fn(event) { event.copy() }),
+    },
+    support: record.support,
+  })
+  results.sort_by(fn(a, b) {
+    let support_order = b.support.compare(a.support)
+    if support_order != 0 {
+      support_order
+    } else {
+      pattern_key(a.pattern).compare(pattern_key(b.pattern))
+    }
+  })
+  if results.length() > k {
+    let _ = results.pop()
+  }
+}
+
+///|
+fn grow_top_k(
+  db : Database,
+  prefix : Pattern,
+  states : Array[(Int32, Int32, Int32)],
+  depth : Int32,
+  budget : ProjectionBudget,
+  k : Int32,
+  results : Array[FrequentPattern],
+) -> Unit raise MiningError {
+  if depth >= budget.options.max_items {
+    return
+  }
+  // Top-K is deliberately limited to unconstrained support, where support
+  // is anti-monotone and threshold pruning is sound.
+  for same_event in [true, false] {
+    if same_event && prefix.itemsets.is_empty() {
+      continue
+    }
+    let projections = extend_projection(
+      db,
+      prefix,
+      states,
+      same_event,
+      constraints(),
+      budget,
+    )
+    let keys : Array[Int32] = []
+    for key, _ in projections {
+      keys.push(key)
+    }
+    keys.sort()
+    for item in keys {
+      let next_states = projections[item]
+      let count = projection_support(next_states)
+      if count < top_k_threshold(results, k) {
+        continue
+      }
+      let itemsets = prefix.itemsets.map(fn(event) { event.copy() })
+      if same_event {
+        itemsets[itemsets.length() - 1].push(item)
+      } else {
+        itemsets.push([item])
+      }
+      let next = Pattern::{ itemsets, }
+      insert_top_k(results, { pattern: next, support: count, }, k)
+      grow_top_k(db, next, next_states, depth + 1, budget, k, results)
+    }
+  }
+}
+
+///|
+/// Return exactly the best `k` unconstrained sequence patterns, ordered by
+/// descending sequence support and then by stable structural key. Ties at the
+/// cutoff are resolved by the key, so the result is deterministic. The
+/// search uses a dynamic kth-support threshold; unlike constrained mining,
+/// this pruning is sound because unconstrained sequence support is
+/// anti-monotone. `max_items`, `max_states`, and `max_steps` are hard limits.
+pub fn top_k(
+  db : Database,
+  k : Int32,
+  max_items~ : Int32 = 8,
+  max_states~ : Int32 = 1000000,
+  max_steps~ : Int32 = 10000000,
+) -> Array[FrequentPattern] raise MiningError {
+  validate_database(db)
+  if k < 1 {
+    raise Invalid("top_k must be positive")
+  }
+  let mining_options = options(
+    1,
+    max_items~,
+    max_patterns=2147483647,
+    max_states~,
+    max_steps~,
+  )
+  validate_options(mining_options)
+  let step_limit = max_steps
+  let budget = ProjectionBudget::{
+    work: WorkBudget::{ steps: 0, limit: step_limit, },
+    states: 0,
+    options: mining_options,
+  }
+  let initial = []
+  for sid = 0; sid < db.sequences.length(); sid = sid + 1 {
+    budget.state()
+    initial.push((sid, -1, -1))
+  }
+  let results : Array[FrequentPattern] = []
+  grow_top_k(db, { itemsets: [], }, initial, 0, budget, k, results)
+  results
 }
 
 ///|
