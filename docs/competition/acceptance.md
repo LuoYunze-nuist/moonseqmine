@@ -8,7 +8,7 @@
 - 交换：严格整数 JSON、正整数 SPMF、符号字典；非法输入与预算耗尽抛出类型化错误。
 - 生产 MoonBit 1795 物理行；仅根 src 手写生产文件，排除测试、例子、生成接口与参考向量，计入常规注释及空白。运行 `python scripts/audit_source.py` 可复核。
 - 183 个测试，包括 864 组独立位置/项子集穷举比较、Top-K 独立 powerset oracle 对照和 128 个 PrefixSpan-py 0.5.2 标量序列差分向量；参考范围不包含上游未实现的多项项集。
-- 本地 moonc 0.10.20、moon 0.1.20261104：wasm-gc、wasm、js 的严格 check/build/test 和 wasm-gc 三个例子实际通过；native check 通过，本机缺 MSVC，因此 native build/test/run 本地受环境阻塞。Ubuntu 四后端 CI 必须在公开精确版本 SHA 上全部成功，才能发布。
+- 本次本地复验工具链（2026-11-25）：moonc 0.10.22+124d61d05、moon 0.1.20261119；项目兼容最低版本仍为 moonc >= 0.10.20（由 scripts/check_toolchain.py 检查）。wasm-gc、wasm、js 的严格 check/build/test 和 wasm-gc 三个例子实际通过；native check 通过，本机缺 MSVC，因此 native build/test/run 本地受环境阻塞。发布门禁以推送后精确 SHA 的四后端 CI 为准。
 - README 的三个下游流程：行为路径 4 条记录；服务事件 6 个邻接模式、2 个完整嵌入；符号记录 9 个模式、6 条规则，均有运行断言。Top-K 的排序、并列截断和非法预算另有测试覆盖。
 
 ## 审查修复和边界
